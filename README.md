@@ -70,7 +70,7 @@ Please use Xcode, ProperTree for customize config file
 
 ### BIOS Unlock (Advanced User)
 
-> This is for disable CFG-Lock and edit DVMT [Guide]() here
+> This is for disable CFG-Lock and edit DVMT [Guide](https://github.com/Hoang63X/AN515-54-51X1-Hackintosh/blob/master/BIOS/README.md) here
 
 | Name                          | Address  | Configable value | Default value |
 | :---------------------------- | :------- | :--------------- | :------------ |
