@@ -1,98 +1,89 @@
-# Acer Nitro 5 AN515-54-51X1
+# Guide edit BIOS value using RUEXE
 
-![](/Images/BigSur-Info.png)
+# NOTE
 
-# Supports MacOS 10.15.6, 11.0 Beta beta 5
+**You are modifying your BIOS here. This isn't without risk and you can easily break your laptop with it. Proceed with caution and DON'T just try "something". Only modify if you're sure. I'm not responsible for your mistakes and broken devices.**
 
+### 1: Dump BIOS
 
+If you do not have Intel ME drivers installed, install them now from your system driver download page, then start over here after reboot. 
+Check your BIOS' main page and see if ME FW version is shown. If not then download HWINFO64
 
-#### System configuration
+Once HWINFO is open, look at the large window on the left side, expand motherboard, and find the ME area. 
+Inside that section is the ME Firmware version. Take note of the version. (ie. write it down or get a screenshot)
 
-| Model     | AN515-54 51X1                                      |
-| :-------- | :------------------------------------------------- |
-| Processor | Intel® Core™ i5-9300H                              |
-| Memory    | 2666MHz DDR4 1x8GB                                 |
-| Graphics  | Intel® UHD Graphics 630 & Nvidia GeForce® GTX 1050 |
-| Monitor   | LG Display LP156WFC-SPD1                           |
-| Ram       | 8GB DDR4-2666Mhz                                   |
-| Disk      | SK Hynix 256gb PCIe® NVMe™                         |
-| Audio     | Realtek HD Audio ALC255                            |
-| Wifi      | Intel(R) Wireless-AC 9560 160MHz                   |
-| Ethernet  | RealTek RTL8168/8111 PCI-E Gigabit Ethernet        |
-| BIOS      | 1.31                                               |
+Once you have that, go to the thread linked below, and in the section "C.2" find and download the matching ME System Tools Package for your system.
+(ie if ME FW version = 10.x get V10 package, if 9.0-9.1 get V9.1 package, if 9.5 or above get V9.5 package etc)
+[DOWNLOAD " ME System Tools " packages HERE](https://www.win-raid.com/t596f39-Intel-Management-Engine-Drivers-Firmware-amp-System-Tools.html)
 
+Once downloaded, inside you will find Flash Programming Tool folder, and then inside that a Windows or Win32/Win32 folder (NOT x64).
+Highlight that Win/Win32 folder, then hold shift and press right click. Choose "open command window here".
 
-# About build
+Now you should be at the command prompt. 
+You are going to BACKUP the factory un-modified firmware, so type the following command: 
+Command: " FPTw.exe -bios -d biosreg.bin "
 
-#### Performance
+### 2: Finding BIOS variable
 
-<p align="center">
-  <img src="Images/geekbench5.png">
-</p>
+1) Open UEFITool > File > Open image file... > select "All files (*)" on the corner > choose biosreg.bin
+2) Ctrl F and search **CFG Lock**, a message will be displayed, double click on the message, the entry/module should be selected displaying additional information. Action > File > Extract as is... > save as setup.bin
+3) Download [Universal IFR Extractor](https://github.com/LongSoft/Universal-IFR-Extractor/releases)
 
-- [Geekbench 5](https://browser.geekbench.com/v5/cpu/3285570)
+Open your setup.bin with ifrextract
 
-- Battery: 20% wear level 80% brightness, I got 2h on screen when surfing web
+``
+path/to/ifrextract path/to/Setup.bin path/to/Setup.txt
+``
 
-#### What Working
+4) Open Setup.txt and search for CFG Lock
 
-- [x] Audio, Input/Mic, Output
-- [x] iGPU
-- [x] Fully Functional QE/CI Enabled Graphics
-- [x] ACPI Display brightness
-- [x] Ethernet
-- [x] Sleep + Wake
-- [x] Smart Touchpad + Gestures
-- [x] WiFi (2.4 + 5GHz) [Black80211-Catalina](https://github.com/usr-sse2/Black80211-Catalina)
-- [x] Native hotkey support with Fn keys
-- [x] FaceTime, Messages, Icloud
+"Variable:" will show the offset. In my case the offset is 0x3E. The value stored in that address is the actual CFG Lock and we need to set to 0
 
-#### Not Working
+### 3: Create a bootable USB with RU
 
-- [ ] HDMI due to Nvidia Optimus
-- [ ] Nvidia GeForce® GTX 1050
+To actually change the BIOS Lock, we can't do it directly from the operating system, we need an utility called RU:
+RU homepage: [RU](http://ruexe.blogspot.com)
+There should be 3 files inside: RU.efi, RU.exe and RU32.efi
 
-# Installation
+- Download Rufus and open it as administrator.
 
-- Create a Bootable USB using Olarila images, [guide](https://www.olarila.com/topic/5794-hackintosh-guide-install-macos-with-vanilla-olarila-image-step-by-step-install-and-post-install-windows-linux-or-mac/) here
+- Select from the device list your pendrive or card, with the following options, and hit Start. It will delete all the data on that device:
+Partition scheme and target system type: MBR partition scheme for UEFI
+File system: use FAT32. FAT (Default) will fail to format and NTFS will fail to save screenshots from RU itself.
+Quick format
+Uncheck "Make a bootable disk using"
+- Now, browse to the unit with Windows explorer (in my case it's H: drive) and create the folder EFI on the root of the pendrive and another folder BOOT inside EFI.
 
-### Note
-Please use Xcode, ProperTree for customize config file
+- Copy the downloaded file RU.efi to H:\EFI\BOOT and rename it to bootx64.efi
 
-(Don't use OpenCore Configuration, Clover Configuration or it will **BROKE** your config file)
+Now you have a bootable USB pendrive with RU.
 
-### BIOS Settings
+### 4:Finding and disable CFG Lock
 
-| BIOS config | Settings |
-| :---------- | :------- |
-| SATA        | AHCI     |
-| Secure Boot | Disable  |
+Restart and press F12, select your USB then this will show up
 
-### BIOS Unlock (Advanced User)
+![](/BIOS/20200823080754.bmp)
 
-> This is for disable CFG-Lock and edit DVMT [Guide]() here
+Press **ALT =**, a list of UEFI variables will be displayed in alphabetical order. Use the keyboard arrows to move down until you see "CpuSetup"
 
-| Name                          | Address  | Configable value | Default value |
-| :---------------------------- | :------- | :--------------- | :------------ |
-| CFC-Lock                      | 0x3E     | 0x0 (Disable)    | 0x1           |
-| DVMT Pre-Allocated (optional) | 0x107    | 0x2 (64MB)       | 0x2           |
-| DVMT Total Gfx Mem (optional) | 0x108    | 0x3 (MAX)        | 0x2           |
+![](/BIOS/20200823080810.bmp)
 
-### Post Installation
-- Sleep Wake
+and then with the arrow keys move to row 0030, and then to the column 0E, until you are at position 003E
 
-```shell
-sudo pmset -a hibernatemode 0
-sudo pmset -a autopoweroff 0
-sudo pmset -a standby 0
-sudo pmset -a proximitywake 0
-```
-- > `-b` - Battery `-c` - AC Power `-a` - Both
+![](/BIOS/20200823080817.bmp)
 
-# Credits
+Just type **0** and the value in that position will change to **00** in red, meaning that it's in edit mode. Type Enter to accept the new value
 
-- [acidanthera](https://github.com/acidanthera) for almost all kexts and drivers
-- [dortania](https://dortania.github.io/OpenCore-Install-Guide/) for OC guide
-- [Olarila](https://www.olarila.com) for the iso images
-- [Hackintosh-stuff](https://github.com/hackintosh-stuff/ComboJack) for the ComboJack
-- [Daliansky](https://github.com/daliansky/) for the [OC](https://github.com/daliansky/OC-little/) hotpatch guide [黑果小兵的部落阁](https://blog.daliansky.net/)
+![](/BIOS/20200823080830.bmp)
+
+Finally, CTRL+W will save changes permanently to the BIOS. You should see a "Updated OK: Setup" message
+
+![](/BIOS/20200823080836.bmp)
+
+To quit, press **ALT Q**
+
+### 4.1: Optional
+
+If you want to change DVMT, do the same but not in **CpuSetup**, search for **SaSetup** the use **CTRL Pg DN** to switch to further pages, then with the arrow keys move to row 0100, and then to the column 07 and 08, see the value in **BIOS Unlock (Advanced User)**, 0107 type 2, 0108 type 3 and the value in that position will change to **02** and **03** in red, now **Ctrl W** to save.
+
+![](/BIOS/20200823081018.bmp)
