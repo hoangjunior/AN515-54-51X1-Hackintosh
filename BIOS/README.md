@@ -81,9 +81,3 @@ Finally, CTRL+W will save changes permanently to the BIOS. You should see a "Upd
 ![](/BIOS/20200823080836.bmp)
 
 To quit, press **ALT Q**
-
-### 4.1: Optional
-
-If you want to change DVMT, do the same but not in **CpuSetup**, search for **SaSetup** the use **CTRL Pg DN** to switch to further pages, then with the arrow keys move to row 0100, and then to the column 07 and 08, see the value in **BIOS Unlock (Advanced User)**, 0107 type 2, 0108 type 3 and the value in that position will change to **02** and **03** in red, now **Ctrl W** to save.
-
-![](/BIOS/20200823081018.bmp)
