@@ -75,8 +75,6 @@ Please use Xcode, ProperTree for customize config file
 | Name                          | Address  | Configable value | Default value |
 | :---------------------------- | :------- | :--------------- | :------------ |
 | CFC-Lock                      | 0x3E     | 0x0 (Disable)    | 0x1           |
-| DVMT Pre-Allocated (optional) | 0x107    | 0x2 (64MB)       | 0x2           |
-| DVMT Total Gfx Mem (optional) | 0x108    | 0x3 (MAX)        | 0x2           |
 
 ### Post Installation
 - Sleep Wake
