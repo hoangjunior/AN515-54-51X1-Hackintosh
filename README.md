@@ -1,8 +1,8 @@
 # Acer Nitro 5 AN515-54-51X1
 
-![](/Images/BigSur-Info.png)
+![](/Images/bigsur11.png)
 
-# Supports MacOS 10.15.6, 11.0 Beta beta 5
+# Supports MacOS 10.15.6, 11.0
 
 
 
