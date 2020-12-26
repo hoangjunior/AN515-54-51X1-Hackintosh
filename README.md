@@ -2,7 +2,7 @@
 
 ![](/Images/bigsur11.png)
 
-# Supports MacOS 10.15.6, 11.0
+# Supports MacOS Big Sur (11.x) and Catalina (10.15.x)
 
 
 
