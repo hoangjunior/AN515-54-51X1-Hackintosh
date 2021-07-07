@@ -2,7 +2,8 @@
 
 ![](/Images/bigsur11.png)
 
-# Supports MacOS Big Sur (11.x) and Catalina (10.15.x)
+# Supports Catalina 10.15.7, Big Sur 11.4
+# Monterey 12.0 Beta (not tested)
 
 
 
@@ -11,15 +12,12 @@
 | Model     | AN515-54 51X1                                      |
 | :-------- | :------------------------------------------------- |
 | Processor | Intel® Core™ i5-9300H                              |
-| Memory    | 2666MHz DDR4 1x8GB                                 |
 | Graphics  | Intel® UHD Graphics 630 & Nvidia GeForce® GTX 1050 |
-| Monitor   | LG Display LP156WFC-SPD1                           |
-| Ram       | 8GB DDR4-2666Mhz                                   |
+| Ram       | 16GB DDR4-2666Mhz                                  |
 | Disk      | SK Hynix 256gb PCIe® NVMe™                         |
 | Audio     | Realtek HD Audio ALC255                            |
 | Wifi      | Intel(R) Wireless-AC 9560 160MHz                   |
 | Ethernet  | RealTek RTL8168/8111 PCI-E Gigabit Ethernet        |
-| BIOS      | 1.31                                               |
 
 
 # About build
@@ -32,8 +30,6 @@
 
 - [Geekbench 5](https://browser.geekbench.com/v5/cpu/3285570)
 
-- Battery: 20% wear level 80% brightness, I got 2h on screen when surfing web
-
 #### What Working
 
 - [x] Audio, Input/Mic, Output
@@ -43,7 +39,7 @@
 - [x] Ethernet
 - [x] Sleep + Wake
 - [x] Smart Touchpad + Gestures
-- [x] WiFi (2.4 + 5GHz) [Black80211-Catalina](https://github.com/usr-sse2/Black80211-Catalina)
+- [x] WiFi (2.4Ghz and 5GHz) [Airportitlwm](https://github.com/OpenIntelWireless/itlwm)
 - [x] Native hotkey support with Fn keys
 - [x] FaceTime, Messages, Icloud
 
@@ -57,7 +53,7 @@
 - Create a Bootable USB using Olarila images, [guide](https://www.olarila.com/topic/5794-hackintosh-guide-install-macos-with-vanilla-olarila-image-step-by-step-install-and-post-install-windows-linux-or-mac/) here
 
 ### Note
-Please use Xcode, ProperTree for customize config file
+Please use Xcode or ProperTree for customize config file
 
 (Don't use OpenCore Configuration, Clover Configuration or it will **BROKE** your config file)
 
