@@ -3,7 +3,6 @@
 ![](/Images/bigsur11.png)
 
 # Supports Catalina 10.15.7, Big Sur 11.4
-# Monterey 12.0 Beta (not tested)
 
 
 
