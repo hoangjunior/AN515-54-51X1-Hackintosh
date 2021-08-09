@@ -1,6 +1,6 @@
 # Acer Nitro 5 AN515-54-51X1
 
-![](/Images/bigsur11.png)
+![](/Images/BS.png)
 
 # Supports Catalina 10.15.7, Big Sur 11.4
 
