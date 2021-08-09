@@ -1,1 +1,0 @@
-Run install.sh in CombaJack first then run the install.sh in alc_fix
